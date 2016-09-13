@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "msgman.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -17,6 +18,10 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    MsgMan *msgman;
+
+public slots:
+    void onSearchClicked();
 };
 
 #endif // MAINWINDOW_H

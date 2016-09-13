@@ -8,11 +8,11 @@ class MsgMan
 public:
     MsgMan(QString db_filename);
 
-    QVector<QPair<QString, QString>> *SearchByKey(QString keyword);
+    QVector<QPair<QString, QString>> *searchByKey(QString keyword);
 
-    bool Insert(QString keyword, QString value);
+    bool insert(QString keyword, QString value);
 
-    bool Delete(QString keyword);
+    bool deleteByKey(QString keyword);
 };
 
 #endif // MSGMAN_H

@@ -6,9 +6,16 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    msgman = new MsgMan("abc");
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete msgman;
+}
+
+void MainWindow::onSearchClicked()
+{
+    msgman->searchByKey(ui->searchEdit->text());
 }
