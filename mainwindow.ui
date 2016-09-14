@@ -6,24 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>525</width>
-    <height>368</height>
+    <width>1030</width>
+    <height>574</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>MsgMan</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTableView" name="tableView">
-    <property name="geometry">
-     <rect>
-      <x>5</x>
-      <y>51</y>
-      <width>511</width>
-      <height>301</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLineEdit" name="searchEdit">
     <property name="geometry">
      <rect>
@@ -46,6 +36,29 @@
     <property name="text">
      <string>Search</string>
     </property>
+   </widget>
+   <widget class="QTableWidget" name="tableWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>1001</width>
+      <height>511</height>
+     </rect>
+    </property>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>350</number>
+    </attribute>
+    <column>
+     <property name="text">
+      <string>keyword</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>value</string>
+     </property>
+    </column>
    </widget>
   </widget>
  </widget>

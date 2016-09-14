@@ -3,6 +3,7 @@
 
 #include "msgman.h"
 #include <QMainWindow>
+#include <QSqlTableModel>
 
 namespace Ui {
 class MainWindow;
