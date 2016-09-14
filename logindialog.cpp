@@ -26,11 +26,11 @@ void LoginDialog::onLogin()
     QString password = ui->passwordEdit->text();
 
     if(rootUsers.indexOf(QPair<QString, QString>(username, password)) >= 0) {
-        this->destroy();
+        this->close();
         MainWindow *w = new MainWindow(true);
         w->show();
     } else if(users.indexOf(QPair<QString, QString>(username, password)) >= 0) {
-        this->destroy();
+        this->close();
         MainWindow *w = new MainWindow(false);
         w->show();
     } else {
