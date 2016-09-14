@@ -1,9 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "msgman.h"
 #include <QMainWindow>
-#include <QSqlTableModel>
 
 namespace Ui {
 class MainWindow;
@@ -19,10 +17,13 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    MsgMan *msgman;
 
 public slots:
+    void onUserClicked();
+    void onBranchClicked();
+    void onSellClicked();
     void onSearchClicked();
+    void onSalaryClicked();
 };
 
 #endif // MAINWINDOW_H

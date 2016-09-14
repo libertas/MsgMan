@@ -14,11 +14,9 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    msgman.cpp \
     logindialog.cpp
 
 HEADERS  += mainwindow.h \
-    msgman.h \
     logindialog.h
 
 FORMS    += mainwindow.ui \

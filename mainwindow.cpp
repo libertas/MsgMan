@@ -7,16 +7,29 @@ MainWindow::MainWindow(bool isRoot) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    msgman = new MsgMan(isRoot);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete msgman;
+}
+
+void MainWindow::onUserClicked()
+{
+}
+
+void MainWindow::onBranchClicked()
+{
+}
+
+void MainWindow::onSellClicked()
+{
 }
 
 void MainWindow::onSearchClicked()
 {
-    msgman->searchByKey(ui->searchEdit->text());
+}
+
+void MainWindow::onSalaryClicked()
+{
 }
