@@ -2,9 +2,10 @@
 #include <iostream>
 
 
-MsgMan::MsgMan(QString db_filename)
+MsgMan::MsgMan(bool isRoot)
 {
-    std::cout<<"Initializing MsgMan,db:"<<db_filename.toStdString()<<std::endl;
+    std::cout<<"Initializing MsgMan,"<<isRoot<<std::endl;
+    this->isRoot = isRoot;
 }
 
 QVector<QPair<QString, QString>> *MsgMan::searchByKey(QString keyword)
@@ -18,10 +19,19 @@ QVector<QPair<QString, QString>> *MsgMan::searchByKey(QString keyword)
 
 bool MsgMan::insert(QString keyword, QString value)
 {
-    return true;
+    if(this->isRoot) {
+        return true;
+    } else {
+        return false;
+    }
+
 }
 
 bool MsgMan::deleteByKey(QString keyword)
 {
-    return true;
+    if(this->isRoot) {
+        return true;
+    } else {
+        return false;
+    }
 }
