@@ -20,6 +20,11 @@ bool User::Init()
     return true;
 }
 
+bool User::End()
+{
+    QSqlDatabase::removeDatabase(User::db.connectionName());
+}
+
 User::User(QString name, QString password, bool isRoot)
 {
     assert(User::initialized);

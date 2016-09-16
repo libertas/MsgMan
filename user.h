@@ -9,6 +9,8 @@ class User
 {
 public:
     static bool Init();
+    static bool End();
+
     // Create a new user
     User(QString name, QString password, bool isRoot);
     // Create a user from the database

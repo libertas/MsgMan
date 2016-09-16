@@ -10,5 +10,9 @@ int main(int argc, char *argv[])
     LoginDialog ld;
     ld.show();
 
-    return a.exec();
+    int re = a.exec();
+
+    User::End();
+
+    return re;
 }
