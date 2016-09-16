@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "user.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -12,11 +13,12 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(bool isRoot);
+    explicit MainWindow(User *u);
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
+    User *user;
 
 public slots:
     void onUserClicked();

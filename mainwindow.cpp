@@ -2,11 +2,12 @@
 #include "ui_mainwindow.h"
 
 
-MainWindow::MainWindow(bool isRoot) :
+MainWindow::MainWindow(User *u) :
     QMainWindow(0),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->user = user;
 }
 
 MainWindow::~MainWindow()

@@ -9,9 +9,9 @@ LoginDialog::LoginDialog(QWidget *parent) :
     ui->setupUi(this);
     ui->incorrectLabel->hide();
 
-    rootUsers.append(QPair<QString, QString>("root", "root123"));
+    users.append(User("root", "root123", true));
 
-    users.append(QPair<QString, QString>("user", "user123"));
+    users.append(User("user", "user123", false));
 }
 
 LoginDialog::~LoginDialog()
@@ -25,13 +25,11 @@ void LoginDialog::onLogin()
     QString username = ui->usernameEdit->text();
     QString password = ui->passwordEdit->text();
 
-    if(rootUsers.indexOf(QPair<QString, QString>(username, password)) >= 0) {
+    User *u = new User(username, password);
+
+    if(users.indexOf(*u) >= 0) {
         this->close();
-        MainWindow *w = new MainWindow(true);
-        w->show();
-    } else if(users.indexOf(QPair<QString, QString>(username, password)) >= 0) {
-        this->close();
-        MainWindow *w = new MainWindow(false);
+        MainWindow *w = new MainWindow(u);
         w->show();
     } else {
         ui->incorrectLabel->show();

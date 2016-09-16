@@ -1,6 +1,7 @@
 #ifndef LOGINDIALOG_H
 #define LOGINDIALOG_H
 
+#include "user.h"
 #include <QtCore>
 #include <QDialog>
 
@@ -18,8 +19,7 @@ public:
 
 private:
     Ui::LoginDialog *ui;
-    QList<QPair<QString, QString>> rootUsers;
-    QList<QPair<QString, QString>> users;
+    QList<User> users;
 
 public slots:
     void onLogin();
