@@ -13,6 +13,7 @@ public:
     User(QString name, QString password, bool isRoot);
     // Create a user from the database
     User(QString name, QString password);
+    bool operator ==(User another);
 
 private:
     static QSqlDatabase db;

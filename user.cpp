@@ -36,3 +36,13 @@ User::User(QString name, QString password)
 
     // Read user data from the database
 }
+
+bool User::operator ==(User another)
+{
+    if(this->name == another.name
+            && this->password == another.password) {
+        return true;
+    } else {
+        return false;
+    }
+}
