@@ -8,7 +8,7 @@ MainWindow::MainWindow(User *u) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->user = user;
+    this->user = u;
 }
 
 MainWindow::~MainWindow()
@@ -18,7 +18,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::onUserClicked()
 {
-    UserManage *um = new UserManage();
+    UserManage *um = new UserManage(this->user);
     um->show();
 }
 

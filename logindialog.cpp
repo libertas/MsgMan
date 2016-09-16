@@ -21,7 +21,6 @@ LoginDialog::~LoginDialog()
     delete ui;
 }
 
-#include <iostream>
 void LoginDialog::onLogin()
 {
     QString username = ui->usernameEdit->text();
