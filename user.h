@@ -15,9 +15,15 @@ public:
 
     // Create a new user
     User(QString name, QString password, bool isRoot);
+
     // Create a user from the database
     User(QString name, QString password);
+
     bool operator ==(User another);
+
+    QString getName() const;
+    QString getPassword() const;
+    bool getIsRoot() const;
 
 private:
     static QSqlDatabase db;

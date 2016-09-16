@@ -92,3 +92,18 @@ bool User::operator ==(User another)
         return false;
     }
 }
+
+QString User::getName() const
+{
+    return this->name;
+}
+
+QString User::getPassword() const
+{
+    return this->password;
+}
+
+bool User::getIsRoot() const
+{
+    return this->isRoot;
+}
