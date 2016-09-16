@@ -12,6 +12,7 @@ public:
     static bool End();
     static QList<User> *getUsers();
     static bool noRootUser();
+    static bool Modify(QList<User> *users);
 
     // Create a new user
     User(QString name, QString password, bool isRoot);
@@ -24,6 +25,7 @@ public:
     QString getName() const;
     QString getPassword() const;
     bool getIsRoot() const;
+    bool save();
 
 private:
     static QSqlDatabase db;

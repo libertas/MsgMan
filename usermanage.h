@@ -19,6 +19,10 @@ public:
 private:
     Ui::UserManage *ui;
     User *user;
+
+public slots:
+    void onApplyClicked();
+    void onResetClicked();
 };
 
 #endif // USERMANAGE_H

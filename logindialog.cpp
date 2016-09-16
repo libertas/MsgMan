@@ -9,11 +9,13 @@ LoginDialog::LoginDialog(QWidget *parent) :
     ui->setupUi(this);
     ui->incorrectLabel->hide();
 
-    users = User::getUsers();
-
     if(User::noRootUser()) {
-        users->append(User("", "", true));
+        User u("", "", true);
+        u.save();
+        users->append(u);
     }
+
+    users = User::getUsers();
 }
 
 LoginDialog::~LoginDialog()

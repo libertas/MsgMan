@@ -1,7 +1,6 @@
 #include "user.h"
 #include "assert.h"
 #include <QSqlQuery>
-#include <iostream>
 
 QSqlDatabase User::db;
 bool User::initialized;
@@ -16,10 +15,9 @@ bool User::Init()
 
     QSqlQuery query("", User::db);
     query.exec("CREATE TABLE IF NOT EXISTS users (username, password, isRoot)");
-    query.exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_username ON favs (username)");
+    query.exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_username ON users (username)");
 
     User::db.commit();
-
     User::db.close();
 
     return true;
@@ -66,6 +64,27 @@ bool User::noRootUser()
     return true;
 }
 
+bool User::Modify(QList<User> *users)
+{
+    User::db.open();
+    QSqlQuery query("", User::db);
+
+    query.prepare("DELETE FROM users");
+    query.exec();
+
+    for(QList<User>::Iterator iter = users->begin(); iter != users->end(); iter++) {
+        query.prepare("INSERT INTO users VALUES (?, ?, ?)");
+        query.addBindValue(iter->getName());
+        query.addBindValue(iter->getPassword());
+        query.addBindValue(iter->getIsRoot());
+        assert(query.exec());
+    }
+
+    User::db.commit();
+    User::db.close();
+    return true;
+}
+
 User::User(QString name, QString password, bool isRoot)
 {
     assert(User::initialized);
@@ -81,6 +100,16 @@ User::User(QString name, QString password)
     this->password = password;
 
     // Read user data from the database
+    User::db.open();
+    QSqlQuery query("", User::db);
+    query.prepare("SELECT * FROM users WHERE username=?");
+    query.addBindValue(name);
+    query.addBindValue(password);
+    if(query.exec() && query.next()) {
+        this->isRoot = query.value(2).toBool();
+    }
+
+    User::db.close();
 }
 
 bool User::operator ==(User another)
@@ -106,4 +135,19 @@ QString User::getPassword() const
 bool User::getIsRoot() const
 {
     return this->isRoot;
+}
+
+bool User::save()
+{
+    User::db.open();
+    QSqlQuery query("", User::db);
+    query.prepare("REPLACE INTO users VALUES (?, ?, ?)");
+    query.addBindValue(name);
+    query.addBindValue(password);
+    query.addBindValue(isRoot);
+    assert(query.exec());
+    User::db.commit();
+    User::db.close();
+
+    return true;
 }

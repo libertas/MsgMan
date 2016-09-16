@@ -68,5 +68,42 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>applyButton</sender>
+   <signal>clicked()</signal>
+   <receiver>UserManage</receiver>
+   <slot>onApplyClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>330</x>
+     <y>332</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>311</x>
+     <y>323</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>resetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>UserManage</receiver>
+   <slot>onResetClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>521</x>
+     <y>329</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>556</x>
+     <y>330</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onApplyClicked()</slot>
+  <slot>onResetClicked()</slot>
+ </slots>
 </ui>
