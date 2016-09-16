@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "usermanage.h"
 
 
 MainWindow::MainWindow(User *u) :
@@ -17,6 +18,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::onUserClicked()
 {
+    UserManage *um = new UserManage();
+    um->show();
 }
 
 void MainWindow::onBranchClicked()

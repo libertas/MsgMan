@@ -19,7 +19,7 @@ public:
 
 private:
     Ui::LoginDialog *ui;
-    QList<User> users;
+    QList<User> *users;
 
 public slots:
     void onLogin();

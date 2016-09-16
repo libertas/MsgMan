@@ -9,9 +9,11 @@ LoginDialog::LoginDialog(QWidget *parent) :
     ui->setupUi(this);
     ui->incorrectLabel->hide();
 
-    users.append(User("root", "root123", true));
+    users = User::getUsers();
 
-    users.append(User("user", "user123", false));
+    if(User::noRootUser()) {
+        users->append(User("", "", true));
+    }
 }
 
 LoginDialog::~LoginDialog()
@@ -27,7 +29,7 @@ void LoginDialog::onLogin()
 
     User *u = new User(username, password);
 
-    if(users.indexOf(*u) >= 0) {
+    if(users->indexOf(*u) >= 0) {
         this->close();
         MainWindow *w = new MainWindow(u);
         w->show();

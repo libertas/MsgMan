@@ -10,6 +10,8 @@ class User
 public:
     static bool Init();
     static bool End();
+    static QList<User> *getUsers();
+    static bool noRootUser();
 
     // Create a new user
     User(QString name, QString password, bool isRoot);
