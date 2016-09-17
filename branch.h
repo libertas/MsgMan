@@ -10,8 +10,8 @@ class Branch
 public:
     static bool Init();
     static bool End();
+    static Branch *CreateById(long id);
 
-    Branch(long id);
     Branch(long id, QString name, QString addr, QList<Seller> sellers);
 
     bool addSeller(Seller *s);
@@ -25,6 +25,8 @@ public:
 private:
     static QSqlDatabase db;
     static bool initialized;
+
+    bool isValid();
 
     long id;
     QString name;

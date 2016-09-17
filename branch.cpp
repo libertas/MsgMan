@@ -1,6 +1,7 @@
 #include "branch.h"
 #include <assert.h>
 #include <QSqlQuery>
+#include <QVariantList>
 
 
 QSqlDatabase Branch::db;
@@ -17,7 +18,7 @@ bool Branch::Init()
 
     QSqlQuery query("", Branch::db);
     query.exec("CREATE TABLE IF NOT EXISTS branches (id, name, addr)");
-    query.exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_id ON users (id)");
+    query.exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_id ON branches (id)");
 
     Branch::db.commit();
     Branch::db.close();
@@ -36,11 +37,27 @@ bool Branch::End()
     return true;
 }
 
-Branch::Branch(long id)
+Branch *Branch::CreateById(long id)
 {
-    this->id = id;
+    assert(Branch::initialized);
 
-    // Read data from db
+    QString name, addr;
+    QList<Seller> sellers;
+
+    Branch::db.open();
+    QSqlQuery query("", Branch::db);
+
+    query.prepare("SELECT * FROM branches WHERE id=?");
+    query.addBindValue(QString::number(id, 10));
+    if(query.exec() && query.next()) {
+        name = query.value(1).toString();
+        addr = query.value(2).toString();
+    }
+
+    Branch::db.close();
+
+    Branch *b = new Branch(id, name, addr, sellers);
+    return b;
 }
 
 Branch::Branch(long id, QString name, QString addr, QList<Seller> sellers)
@@ -88,7 +105,23 @@ bool Branch::replaceSeller(Seller *s)
 
 bool Branch::save()
 {
+    assert(Branch::initialized);
 
+    Branch::db.open();
+
+    QSqlQuery query("", Branch::db);
+
+    query.prepare("REPLACE INTO branches VALUES (?, ?, ?)");
+    query.addBindValue(QString::number(this->id, 10));
+    query.addBindValue(this->name);
+    query.addBindValue(this->addr);
+    query.exec();
+
+    Branch::db.commit();
+
+    Branch::db.close();
+
+    return true;
 }
 
 QString Branch::getName()
@@ -99,4 +132,13 @@ QString Branch::getName()
 QString Branch::getAddr()
 {
     return this->addr;
+}
+
+bool Branch::isValid()
+{
+    if(this->name.isEmpty() && this->addr.isEmpty()) {
+        return false;
+    } else {
+        return true;
+    }
 }

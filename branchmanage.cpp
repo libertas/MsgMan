@@ -18,11 +18,19 @@ BranchManage::~BranchManage()
 void BranchManage::onOpenClicked()
 {
     long id = ui->idEdit->text().toLong();
-    Branch *b = new Branch(id);
+    Branch *b = Branch::CreateById(id);
+
     ui->nameEdit->setText(b->getName());
+    ui->addrEdit->setText(b->getAddr());
 }
 
 void BranchManage::onSaveClicked()
 {
+    long id = ui->idEdit->text().toLong();
+    QString name = ui->nameEdit->text();
+    QString addr = ui->addrEdit->text();
+    QList<Seller> sellers;
 
+    Branch b(id, name, addr, sellers);
+    b.save();
 }
