@@ -78,7 +78,7 @@ bool User::Modify(QList<User> *users)
     query.exec();
 
     for(QList<User>::Iterator iter = users->begin(); iter != users->end(); iter++) {
-        query.prepare("INSERT INTO users VALUES (?, ?, ?)");
+        query.prepare("REPLACE INTO users VALUES (?, ?, ?)");
         query.addBindValue(iter->getName());
         query.addBindValue(iter->getPassword());
         query.addBindValue(iter->getIsRoot());

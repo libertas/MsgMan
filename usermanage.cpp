@@ -21,6 +21,9 @@ UserManage::UserManage(User *u) :
             row++;
         }
     } else {
+        ui->addButton->hide();
+        ui->deleteButton->hide();
+
         ui->tableWidget->setRowCount(1);
 
         QTableWidgetItem *itemName = new QTableWidgetItem(this->user->getName());
@@ -71,10 +74,24 @@ void UserManage::onResetClicked()
 
 void UserManage::onAddClicked()
 {
-
+    if(this->user->getIsRoot()) {
+        ui->tableWidget->setRowCount(ui->tableWidget->rowCount() + 1);
+        ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 0, new QTableWidgetItem(QString("username")));
+        ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 1, new QTableWidgetItem(QString("password")));
+        ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 2, new QTableWidgetItem(QString("0")));
+    }
 }
 
 void UserManage::onDeleteClicked()
 {
-
+    if(this->user->getIsRoot()) {
+        QList<QTableWidgetSelectionRange> ranges = ui->tableWidget->selectedRanges();
+        for(long i = ranges.count() - 1; i >= 0; i--) {
+            long topRow = ranges.at(i).topRow();
+            long bottomRow = ranges.at(i).bottomRow();
+            for(long j = bottomRow; j >= topRow; j--){
+                ui->tableWidget->removeRow(j);
+            }
+        }
+    }
 }
