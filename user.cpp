@@ -104,9 +104,10 @@ User::User(QString name, QString password)
     QSqlQuery query("", User::db);
     query.prepare("SELECT * FROM users WHERE username=?");
     query.addBindValue(name);
-    query.addBindValue(password);
     if(query.exec() && query.next()) {
         this->isRoot = query.value(2).toBool();
+    } else {
+        this->isRoot = 0;
     }
 
     User::db.close();
