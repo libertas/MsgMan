@@ -23,6 +23,7 @@ private:
 public slots:
     void onUserClicked();
     void onBranchClicked();
+    void onBranchesClicked();
     void onSellClicked();
     void onSearchClicked();
     void onSalaryClicked();

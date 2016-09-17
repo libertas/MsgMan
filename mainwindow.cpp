@@ -1,3 +1,4 @@
+#include "branchmanage.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "usermanage.h"
@@ -23,6 +24,12 @@ void MainWindow::onUserClicked()
 }
 
 void MainWindow::onBranchClicked()
+{
+    BranchManage *bm = new BranchManage(this->user);
+    bm->show();
+}
+
+void MainWindow::onBranchesClicked()
 {
 }
 

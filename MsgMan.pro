@@ -18,15 +18,18 @@ SOURCES += main.cpp\
     user.cpp \
     usermanage.cpp \
     seller.cpp \
-    branch.cpp
+    branch.cpp \
+    branchmanage.cpp
 
 HEADERS  += mainwindow.h \
     logindialog.h \
     user.h \
     usermanage.h \
     seller.h \
-    branch.h
+    branch.h \
+    branchmanage.h
 
 FORMS    += mainwindow.ui \
     logindialog.ui \
-    usermanage.ui
+    usermanage.ui \
+    branchmanage.ui
