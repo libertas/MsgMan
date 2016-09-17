@@ -1,4 +1,40 @@
 #include "branch.h"
+#include <assert.h>
+#include <QSqlQuery>
+
+
+QSqlDatabase Branch::db;
+bool Branch::initialized;
+
+bool Branch::Init()
+{
+    assert(!Branch::initialized);
+    Branch::db = QSqlDatabase::addDatabase("QSQLITE", "connSQLite");
+    Branch::db.setDatabaseName("office.db");
+    Branch::initialized = true;
+
+    Branch::db.open();
+
+    QSqlQuery query("", Branch::db);
+    query.exec("CREATE TABLE IF NOT EXISTS branches (id, name, addr)");
+    query.exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_id ON users (id)");
+
+    Branch::db.commit();
+    Branch::db.close();
+
+    return true;
+}
+
+bool Branch::End()
+{
+    assert(Branch::initialized);
+
+    QSqlDatabase::removeDatabase(Branch::db.connectionName());
+
+    Branch::initialized = false;
+
+    return true;
+}
 
 Branch::Branch(long id)
 {

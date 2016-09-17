@@ -1,4 +1,40 @@
 #include "seller.h"
+#include <assert.h>
+#include <QSqlQuery>
+
+
+QSqlDatabase Seller::db;
+bool Seller::initialized;
+
+bool Seller::Init()
+{
+    assert(!Seller::initialized);
+    Seller::db = QSqlDatabase::addDatabase("QSQLITE", "connSQLite");
+    Seller::db.setDatabaseName("office.db");
+    Seller::initialized = true;
+
+    Seller::db.open();
+
+    QSqlQuery query("", Seller::db);
+    query.exec("CREATE TABLE IF NOT EXISTS Sellers (id, name, age, sex, basicSalary, percentage)");
+    query.exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_id ON users (id)");
+
+    Seller::db.commit();
+    Seller::db.close();
+
+    return true;
+}
+
+bool Seller::End()
+{
+    assert(Seller::initialized);
+
+    QSqlDatabase::removeDatabase(Seller::db.connectionName());
+
+    Seller::initialized = false;
+
+    return true;
+}
 
 Seller::Seller(long id, QString name, short age, bool sex)
 {
