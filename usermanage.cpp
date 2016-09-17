@@ -1,3 +1,4 @@
+#include "mainwindow.h"
 #include "usermanage.h"
 #include "ui_usermanage.h"
 
@@ -23,7 +24,7 @@ UserManage::UserManage(User *u) :
         ui->tableWidget->setRowCount(1);
         ui->tableWidget->setItem(0, 0, new QTableWidgetItem(this->user->getName()));
         ui->tableWidget->setItem(0, 1, new QTableWidgetItem(this->user->getPassword()));
-        ui->tableWidget->setItem(0, 2, new QTableWidgetItem(int(this->user->getIsRoot()) + '0'));
+        ui->tableWidget->setItem(0, 2, new QTableWidgetItem(QString(int(this->user->getIsRoot()) + '0')));
     }
 }
 
@@ -47,8 +48,7 @@ void UserManage::onApplyClicked()
         User *u = new User(this->user->getName(),
                            ui->tableWidget->item(0, 1)->data(Qt::DisplayRole).toString(),
                            false);
-        delete this->user;
-        this->user = u;
+        this->user->copy(u);
         this->user->save();
     }
 }

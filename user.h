@@ -26,6 +26,7 @@ public:
     QString getPassword() const;
     bool getIsRoot() const;
     bool save();
+    void copy(User *u);
 
 private:
     static QSqlDatabase db;

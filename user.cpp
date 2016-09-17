@@ -7,6 +7,7 @@ bool User::initialized;
 
 bool User::Init()
 {
+    assert(!User::initialized);
     User::db = QSqlDatabase::addDatabase("QSQLITE", "connSQLite");
     User::db.setDatabaseName("password.db");
     User::initialized = true;
@@ -28,6 +29,8 @@ bool User::End()
     assert(User::initialized);
 
     QSqlDatabase::removeDatabase(User::db.connectionName());
+
+    User::initialized = false;
 
     return true;
 }
@@ -55,6 +58,7 @@ QList<User> *User::getUsers()
 
 bool User::noRootUser()
 {
+    assert(User::initialized);
     QList<User> *users = User::getUsers();
     for(QList<User>::Iterator iter = users->begin(); iter != users->end(); iter++) {
         if(iter->isRoot == true) {
@@ -66,6 +70,7 @@ bool User::noRootUser()
 
 bool User::Modify(QList<User> *users)
 {
+    assert(User::initialized);
     User::db.open();
     QSqlQuery query("", User::db);
 
@@ -115,6 +120,8 @@ User::User(QString name, QString password)
 
 bool User::operator ==(User another)
 {
+    assert(User::initialized);
+
     if(this->name == another.name
             && this->password == another.password) {
         return true;
@@ -125,30 +132,47 @@ bool User::operator ==(User another)
 
 QString User::getName() const
 {
+    assert(User::initialized);
+
     return this->name;
 }
 
 QString User::getPassword() const
 {
+    assert(User::initialized);
+
     return this->password;
 }
 
 bool User::getIsRoot() const
 {
+    assert(User::initialized);
+
     return this->isRoot;
 }
 
 bool User::save()
 {
+    assert(User::initialized);
+
     User::db.open();
     QSqlQuery query("", User::db);
     query.prepare("REPLACE INTO users VALUES (?, ?, ?)");
-    query.addBindValue(name);
-    query.addBindValue(password);
-    query.addBindValue(isRoot);
+    query.addBindValue(this->name);
+    query.addBindValue(this->password);
+    query.addBindValue(this->isRoot);
     assert(query.exec());
     User::db.commit();
     User::db.close();
 
     return true;
+}
+
+void User::copy(User *u)
+{
+    assert(User::initialized);
+
+    this->name = u->getName();
+    this->password = u->getPassword();
+    this->isRoot = u->getIsRoot();
 }
