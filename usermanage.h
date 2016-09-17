@@ -23,6 +23,8 @@ private:
 public slots:
     void onApplyClicked();
     void onResetClicked();
+    void onAddClicked();
+    void onDeleteClicked();
 };
 
 #endif // USERMANAGE_H

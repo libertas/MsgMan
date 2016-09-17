@@ -64,5 +64,17 @@ void UserManage::onApplyClicked()
 
 void UserManage::onResetClicked()
 {
+    UserManage *um = new UserManage(this->user);
+    this->close();
+    um->show();
+}
+
+void UserManage::onAddClicked()
+{
+
+}
+
+void UserManage::onDeleteClicked()
+{
 
 }
