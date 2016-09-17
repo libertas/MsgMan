@@ -7,6 +7,7 @@ UserManage::UserManage(User *u) :
 {
     ui->setupUi(this);
     this->user = u;
+
     if(this->user->getIsRoot()) {
         QList<User> *users = User::getUsers();
         long row = 0;
@@ -18,6 +19,11 @@ UserManage::UserManage(User *u) :
 
             row++;
         }
+    } else {
+        ui->tableWidget->setRowCount(1);
+        ui->tableWidget->setItem(0, 0, new QTableWidgetItem(this->user->getName()));
+        ui->tableWidget->setItem(0, 1, new QTableWidgetItem(this->user->getPassword()));
+        ui->tableWidget->setItem(0, 2, new QTableWidgetItem(int(this->user->getIsRoot()) + '0'));
     }
 }
 
@@ -28,14 +34,23 @@ UserManage::~UserManage()
 
 void UserManage::onApplyClicked()
 {
-    QList<User> users;
+    if(this->user->getIsRoot()) {
+        QList<User> users;
 
-    for(long row = 0; row != ui->tableWidget->rowCount(); row++) {
-        users.append(User(ui->tableWidget->item(row, 0)->data(Qt::DisplayRole).toString(),
-                          ui->tableWidget->item(row, 1)->data(Qt::DisplayRole).toString(),
-                          ui->tableWidget->item(row, 2)->data(Qt::DisplayRole).toBool()));
+        for(long row = 0; row != ui->tableWidget->rowCount(); row++) {
+            users.append(User(ui->tableWidget->item(row, 0)->data(Qt::DisplayRole).toString(),
+                              ui->tableWidget->item(row, 1)->data(Qt::DisplayRole).toString(),
+                              ui->tableWidget->item(row, 2)->data(Qt::DisplayRole).toBool()));
+        }
+        User::Modify(&users);
+    } else {
+        User *u = new User(this->user->getName(),
+                           ui->tableWidget->item(0, 1)->data(Qt::DisplayRole).toString(),
+                           false);
+        delete this->user;
+        this->user = u;
+        this->user->save();
     }
-    User::Modify(&users);
 }
 
 void UserManage::onResetClicked()
