@@ -16,12 +16,16 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     logindialog.cpp \
     user.cpp \
-    usermanage.cpp
+    usermanage.cpp \
+    seller.cpp \
+    branch.cpp
 
 HEADERS  += mainwindow.h \
     logindialog.h \
     user.h \
-    usermanage.h
+    usermanage.h \
+    seller.h \
+    branch.h
 
 FORMS    += mainwindow.ui \
     logindialog.ui \
