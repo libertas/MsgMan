@@ -22,9 +22,18 @@ UserManage::UserManage(User *u) :
         }
     } else {
         ui->tableWidget->setRowCount(1);
-        ui->tableWidget->setItem(0, 0, new QTableWidgetItem(this->user->getName()));
-        ui->tableWidget->setItem(0, 1, new QTableWidgetItem(this->user->getPassword()));
-        ui->tableWidget->setItem(0, 2, new QTableWidgetItem(QString(int(this->user->getIsRoot()) + '0')));
+
+        QTableWidgetItem *itemName = new QTableWidgetItem(this->user->getName());
+        itemName->setFlags(itemName->flags() & ~Qt::ItemIsEditable);
+
+        QTableWidgetItem *itemPassword = new QTableWidgetItem(this->user->getPassword());
+
+        QTableWidgetItem *itemIsRoot = new QTableWidgetItem(QString(int(this->user->getIsRoot()) + '0'));
+        itemIsRoot->setFlags(itemIsRoot->flags() & ~Qt::ItemIsEditable);
+
+        ui->tableWidget->setItem(0, 0, itemName);
+        ui->tableWidget->setItem(0, 1, itemPassword);
+        ui->tableWidget->setItem(0, 2, itemIsRoot);
     }
 }
 
