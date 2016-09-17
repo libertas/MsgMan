@@ -9,7 +9,7 @@ bool Branch::initialized;
 bool Branch::Init()
 {
     assert(!Branch::initialized);
-    Branch::db = QSqlDatabase::addDatabase("QSQLITE", "connSQLite");
+    Branch::db = QSqlDatabase::addDatabase("QSQLITE", "connBranch");
     Branch::db.setDatabaseName("office.db");
     Branch::initialized = true;
 
@@ -39,6 +39,16 @@ bool Branch::End()
 Branch::Branch(long id)
 {
     this->id = id;
+
+    // Read data from db
+}
+
+Branch::Branch(long id, QString name, QString addr, QList<Seller> sellers)
+{
+    this->id = id;
+    this->name = name;
+    this->addr = addr;
+    this->sellers = sellers;
 }
 
 bool Branch::addSeller(Seller *s)
@@ -74,4 +84,19 @@ bool Branch::replaceSeller(Seller *s)
     }
 
     return true;
+}
+
+bool Branch::save()
+{
+
+}
+
+QString Branch::getName()
+{
+    return this->name;
+}
+
+QString Branch::getAddr()
+{
+    return this->addr;
 }

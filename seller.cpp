@@ -9,7 +9,7 @@ bool Seller::initialized;
 bool Seller::Init()
 {
     assert(!Seller::initialized);
-    Seller::db = QSqlDatabase::addDatabase("QSQLITE", "connSQLite");
+    Seller::db = QSqlDatabase::addDatabase("QSQLITE", "connSeller");
     Seller::db.setDatabaseName("office.db");
     Seller::initialized = true;
 

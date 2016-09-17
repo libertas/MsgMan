@@ -72,7 +72,7 @@
     <string>Branch Name</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="nameEdit">
    <property name="geometry">
     <rect>
      <x>100</x>
@@ -95,7 +95,7 @@
     <string>Branch Address</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
+  <widget class="QLineEdit" name="addrEdit">
    <property name="geometry">
     <rect>
      <x>400</x>

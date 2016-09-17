@@ -8,7 +8,7 @@ bool User::initialized;
 bool User::Init()
 {
     assert(!User::initialized);
-    User::db = QSqlDatabase::addDatabase("QSQLITE", "connSQLite");
+    User::db = QSqlDatabase::addDatabase("QSQLITE", "connUser");
     User::db.setDatabaseName("password.db");
     User::initialized = true;
 

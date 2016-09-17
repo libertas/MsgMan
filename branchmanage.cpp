@@ -1,3 +1,4 @@
+#include "branch.h"
 #include "branchmanage.h"
 #include "ui_branchmanage.h"
 
@@ -14,9 +15,11 @@ BranchManage::~BranchManage()
     delete ui;
 }
 
-void BranchManage::onOpenClilcked()
+void BranchManage::onOpenClicked()
 {
-
+    long id = ui->idEdit->text().toLong();
+    Branch *b = new Branch(id);
+    ui->nameEdit->setText(b->getName());
 }
 
 void BranchManage::onSaveClicked()

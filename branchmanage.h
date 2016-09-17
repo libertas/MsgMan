@@ -21,7 +21,7 @@ private:
     User *user;
 
 public slots:
-    void onOpenClilcked();
+    void onOpenClicked();
     void onSaveClicked();
 };
 
