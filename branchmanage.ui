@@ -95,7 +95,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="saveButton">
    <property name="geometry">
     <rect>
      <x>410</x>
@@ -189,7 +189,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
+   <sender>saveButton</sender>
    <signal>clicked()</signal>
    <receiver>BranchManage</receiver>
    <slot>onSaveClicked()</slot>

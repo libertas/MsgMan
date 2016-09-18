@@ -9,6 +9,11 @@ BranchManage::BranchManage(User *u) :
 {
     ui->setupUi(this);
     this->user = u;
+    if(!this->user->getIsRoot()) {
+        ui->nameEdit->setFocusPolicy(Qt::NoFocus);
+        ui->addrEdit->setFocusPolicy(Qt::NoFocus);
+        ui->saveButton->hide();
+    }
 }
 
 BranchManage::~BranchManage()
