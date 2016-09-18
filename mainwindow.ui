@@ -76,7 +76,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Salary</string>
+     <string>Seller Manage</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_6">
@@ -165,7 +165,7 @@
    <sender>pushButton_5</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>onSalaryClicked()</slot>
+   <slot>onSellerClicked()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>185</x>
@@ -199,7 +199,7 @@
   <slot>onUserClicked()</slot>
   <slot>onBranchesClicked()</slot>
   <slot>onSellClicked()</slot>
-  <slot>onSalaryClicked()</slot>
+  <slot>onSellerClicked()</slot>
   <slot>onExit()</slot>
   <slot>onBranchClicked()</slot>
  </slots>

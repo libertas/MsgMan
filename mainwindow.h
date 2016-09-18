@@ -26,7 +26,7 @@ public slots:
     void onBranchesClicked();
     void onSellClicked();
     void onSearchClicked();
-    void onSalaryClicked();
+    void onSellerClicked();
 };
 
 #endif // MAINWINDOW_H

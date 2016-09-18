@@ -43,6 +43,8 @@ Seller *Seller::CreateById(long id)
     short age;
     bool sex;
     long branchId;
+    int basicSalary;
+    double percentage;
 
     Seller::db.open();
     QSqlQuery query("", Seller::db);
@@ -54,12 +56,43 @@ Seller *Seller::CreateById(long id)
         age = query.value(2).toInt();
         sex = query.value(3).toBool();
         branchId = query.value(4).toInt();
+        basicSalary = query.value(5).toInt();
+        percentage = query.value(6).toDouble();
     }
 
     Seller::db.close();
 
     Seller *s = new Seller(id, name, age, sex, branchId);
+    s->setBasicSalary(basicSalary);
+    s->setPercentage(percentage);
     return s;
+}
+
+bool Seller::Modify(QList<Seller> *sellers)
+{
+    assert(Seller::initialized);
+    Seller::db.open();
+    QSqlQuery query("", Seller::db);
+
+    query.prepare("DELETE FROM sellers");
+    query.exec();
+
+    for(QList<Seller>::Iterator iter = sellers->begin(); iter != sellers->end(); iter++) {
+        query.prepare("REPLACE INTO sellers VALUES (?, ?, ?, ?, ?, ?, ?)");
+        query.addBindValue(QString::number(iter->getId(), 10));
+        query.addBindValue(iter->getName());
+        query.addBindValue(iter->getAge());
+        query.addBindValue(iter->getSex());
+        query.addBindValue(QString::number(iter->getBranchId()));
+        query.addBindValue(iter->getBasicSalary());
+        query.addBindValue(iter->getPercentage());
+        assert(query.exec());
+    }
+
+    Seller::db.commit();
+    Seller::db.close();
+
+    return true;
 }
 
 Seller::Seller(long id, QString name, short age, bool sex, long branchId)
@@ -106,6 +139,77 @@ bool Seller::save()
     Seller::db.close();
 
     return true;
+}
+
+void Seller::setBasicSalary(int basicSalary)
+{
+    this->basicSalary = basicSalary;
+}
+
+void Seller::setPercentage(double percentage)
+{
+    this->percentage = percentage;
+}
+
+QList<Seller> *Seller::getSellers()
+{
+    QList<Seller> *sellers = new QList<Seller>;
+
+    Seller::db.open();
+
+    QSqlQuery query("", Seller::db);
+
+    query.prepare("SELECT * FROM sellers");
+    query.exec();
+    while(query.next()) {
+        Seller seller = Seller(query.value(0).toInt(),
+                               query.value(1).toString(),
+                               query.value(2).toInt(),
+                               query.value(3).toBool(),
+                               query.value(4).toInt());
+        seller.setBasicSalary(query.value(5).toInt());
+        seller.setPercentage(query.value(6).toDouble());
+        sellers->append(seller);
+    }
+
+    Seller::db.close();
+
+    return sellers;
+}
+
+long Seller::getId() const
+{
+    return this->id;
+}
+
+QString Seller::getName() const
+{
+    return this->name;
+}
+
+short Seller::getAge() const
+{
+    return this->age;
+}
+
+bool Seller::getSex() const
+{
+    return this->sex;
+}
+
+long Seller::getBranchId() const
+{
+    return this->branchId;
+}
+
+int Seller::getBasicSalary() const
+{
+    return this->basicSalary;
+}
+
+double Seller::getPercentage() const
+{
+    return this->percentage;
 }
 
 bool Seller::operator ==(Seller another)

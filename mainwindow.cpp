@@ -1,5 +1,6 @@
 #include "branchmanage.h"
 #include "mainwindow.h"
+#include "sellermanage.h"
 #include "ui_mainwindow.h"
 #include "usermanage.h"
 
@@ -41,6 +42,8 @@ void MainWindow::onSearchClicked()
 {
 }
 
-void MainWindow::onSalaryClicked()
+void MainWindow::onSellerClicked()
 {
+    SellerManage *sm = new SellerManage(this->user);
+    sm->show();
 }
