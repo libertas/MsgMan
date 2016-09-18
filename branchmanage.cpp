@@ -1,5 +1,6 @@
 #include "branch.h"
 #include "branchmanage.h"
+#include "seller.h"
 #include "ui_branchmanage.h"
 
 BranchManage::BranchManage(User *u) :
@@ -22,6 +23,24 @@ void BranchManage::onOpenClicked()
 
     ui->nameEdit->setText(b->getName());
     ui->addrEdit->setText(b->getAddr());
+
+    long row = 0;
+    ui->tableWidget->setRowCount(row);
+    QList<Seller> *sellers = b->getSellers();
+
+    for(QList<Seller>::Iterator iter = sellers->begin(); iter != sellers->end(); iter++) {
+        ui->tableWidget->setRowCount(ui->tableWidget->rowCount() + 1);
+
+        ui->tableWidget->setItem(row, 0, new QTableWidgetItem(QString::number(sellers->at(row).getId(), 10)));
+        ui->tableWidget->setItem(row, 1, new QTableWidgetItem(sellers->at(row).getName()));
+        ui->tableWidget->setItem(row, 2, new QTableWidgetItem(QString::number(sellers->at(row).getAge())));
+        ui->tableWidget->setItem(row, 3, new QTableWidgetItem(QString::number(int(sellers->at(row).getSex())), 10));
+        ui->tableWidget->setItem(row, 4, new QTableWidgetItem(QString::number(sellers->at(row).getBranchId())));
+        ui->tableWidget->setItem(row, 5, new QTableWidgetItem(QString::number(sellers->at(row).getBasicSalary())));
+        ui->tableWidget->setItem(row, 6, new QTableWidgetItem(QString::number(sellers->at(row).getPercentage())));
+
+        row++;
+    }
 }
 
 void BranchManage::onSaveClicked()

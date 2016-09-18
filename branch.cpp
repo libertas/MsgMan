@@ -1,4 +1,5 @@
 #include "branch.h"
+#include "seller.h"
 #include <assert.h>
 #include <QSqlQuery>
 #include <QVariantList>
@@ -55,6 +56,25 @@ Branch *Branch::CreateById(long id)
     }
 
     Branch::db.close();
+
+    Seller::getDb().open();
+    query = QSqlQuery("", Seller::getDb());
+
+    query.prepare("SELECT * FROM sellers WHERE branchId=?");
+    query.addBindValue(QString::number(id, 10));
+    query.exec();
+    while(query.next()) {
+        Seller seller = Seller(query.value(0).toInt(),
+                               query.value(1).toString(),
+                               query.value(2).toInt(),
+                               query.value(3).toBool(),
+                               query.value(4).toInt());
+        seller.setBasicSalary(query.value(5).toInt());
+        seller.setPercentage(query.value(6).toDouble());
+        sellers.append(seller);
+    }
+
+    Seller::getDb().close();
 
     Branch *b = new Branch(id, name, addr, sellers);
     return b;
@@ -132,6 +152,11 @@ QString Branch::getName()
 QString Branch::getAddr()
 {
     return this->addr;
+}
+
+QList<Seller> *Branch::getSellers()
+{
+    return &sellers;
 }
 
 bool Branch::isValid()

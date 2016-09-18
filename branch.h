@@ -21,6 +21,7 @@ public:
 
     QString getName();
     QString getAddr();
+    QList<Seller> *getSellers();
 
 private:
     static QSqlDatabase db;

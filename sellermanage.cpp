@@ -25,7 +25,7 @@ SellerManage::SellerManage(User *u) :
         ui->tableWidget->setItem(row, 1, new QTableWidgetItem(sellers->at(row).getName()));
         ui->tableWidget->setItem(row, 2, new QTableWidgetItem(QString::number(sellers->at(row).getAge())));
         ui->tableWidget->setItem(row, 3, new QTableWidgetItem(QString::number(int(sellers->at(row).getSex())), 10));
-        ui->tableWidget->setItem(row, 4, new QTableWidgetItem(QString::number(sellers->at(row).getBranchId())));
+        ui->tableWidget->setItem(row, 4, new QTableWidgetItem(QString::number(sellers->at(row).getBranchId(), 10)));
         ui->tableWidget->setItem(row, 5, new QTableWidgetItem(QString::number(sellers->at(row).getBasicSalary())));
         ui->tableWidget->setItem(row, 6, new QTableWidgetItem(QString::number(sellers->at(row).getPercentage())));
 

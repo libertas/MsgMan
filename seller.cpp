@@ -16,7 +16,7 @@ bool Seller::Init()
     Seller::db.open();
 
     QSqlQuery query("", Seller::db);
-    query.exec("CREATE TABLE IF NOT EXISTS sellers (id, name, age, sex, basicSalary, percentage, branchId)");
+    query.exec("CREATE TABLE IF NOT EXISTS sellers (id, name, age, sex, branchId, basicSalary, percentage)");
     query.exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_seller_id ON sellers (id)");
 
     Seller::db.commit();
@@ -83,7 +83,7 @@ bool Seller::Modify(QList<Seller> *sellers)
         query.addBindValue(iter->getName());
         query.addBindValue(iter->getAge());
         query.addBindValue(iter->getSex());
-        query.addBindValue(QString::number(iter->getBranchId()));
+        query.addBindValue(QString::number(iter->getBranchId(), 10));
         query.addBindValue(iter->getBasicSalary());
         query.addBindValue(iter->getPercentage());
         assert(query.exec());
@@ -175,6 +175,11 @@ QList<Seller> *Seller::getSellers()
     Seller::db.close();
 
     return sellers;
+}
+
+QSqlDatabase Seller::getDb()
+{
+    return Seller::db;
 }
 
 long Seller::getId() const

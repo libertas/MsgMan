@@ -13,6 +13,7 @@ public:
     static Seller *CreateById(long id);
     static bool Modify(QList<Seller> *sellers);
     static QList<Seller> *getSellers();
+    static QSqlDatabase getDb();
 
     Seller(long id, QString name, short age, bool sex, long branchId);
 
@@ -30,7 +31,7 @@ public:
     int getBasicSalary() const;
     double getPercentage() const;
 
-    bool operator ==(Seller another);
+    bool operator ==(Seller another);    
 
 private:
     static QSqlDatabase db;
