@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     seller.cpp \
     branch.cpp \
     branchmanage.cpp \
-    sellermanage.cpp
+    sellermanage.cpp \
+    branchesmanage.cpp
 
 HEADERS  += mainwindow.h \
     logindialog.h \
@@ -29,10 +30,12 @@ HEADERS  += mainwindow.h \
     seller.h \
     branch.h \
     branchmanage.h \
-    sellermanage.h
+    sellermanage.h \
+    branchesmanage.h
 
 FORMS    += mainwindow.ui \
     logindialog.ui \
     usermanage.ui \
     branchmanage.ui \
-    sellermanage.ui
+    sellermanage.ui \
+    branchesmanage.ui

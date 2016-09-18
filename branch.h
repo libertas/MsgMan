@@ -11,6 +11,8 @@ public:
     static bool Init();
     static bool End();
     static Branch *CreateById(long id);
+    static QList<Branch> *getBranches();
+    static bool Modify(QList<Branch> *branches);
 
     Branch(long id, QString name, QString addr, QList<Seller> sellers);
 
@@ -19,8 +21,9 @@ public:
     bool replaceSeller(Seller *s);
     bool save();
 
-    QString getName();
-    QString getAddr();
+    long getId() const;
+    QString getName() const;
+    QString getAddr() const;
     QList<Seller> *getSellers();
 
 private:

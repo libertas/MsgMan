@@ -80,6 +80,51 @@ Branch *Branch::CreateById(long id)
     return b;
 }
 
+QList<Branch> *Branch::getBranches()
+{
+    QList<Branch> *branches = new QList<Branch>;
+    QList<long> ids;
+
+    Branch::db.open();
+    QSqlQuery query("", Branch::db);
+
+    query.prepare("SELECT * FROM branches");
+    query.exec();
+    while(query.next()) {
+        ids.append(query.value(0).toInt());
+    }
+
+    Branch::db.close();
+
+    for(QList<long>::Iterator iter = ids.begin(); iter != ids.end(); iter++) {
+        branches->append(*Branch::CreateById(*iter));
+    }
+
+    return branches;
+}
+
+bool Branch::Modify(QList<Branch> *branches)
+{
+    assert(Branch::initialized);
+    Branch::db.open();
+    QSqlQuery query("", Branch::db);
+
+    query.prepare("DELETE FROM branches");
+    query.exec();
+
+    for(QList<Branch>::Iterator iter = branches->begin(); iter != branches->end(); iter++) {
+        query.prepare("REPLACE INTO branches VALUES (?, ?, ?)");
+        query.addBindValue(QString::number(iter->getId(), 10));
+        query.addBindValue(iter->getName());
+        query.addBindValue(iter->getAddr());
+        assert(query.exec());
+    }
+
+    Branch::db.commit();
+    Branch::db.close();
+    return true;
+}
+
 Branch::Branch(long id, QString name, QString addr, QList<Seller> sellers)
 {
     this->id = id;
@@ -144,12 +189,17 @@ bool Branch::save()
     return true;
 }
 
-QString Branch::getName()
+long Branch::getId() const
+{
+    return this->id;
+}
+
+QString Branch::getName() const
 {
     return this->name;
 }
 
-QString Branch::getAddr()
+QString Branch::getAddr() const
 {
     return this->addr;
 }

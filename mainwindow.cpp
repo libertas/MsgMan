@@ -1,3 +1,4 @@
+#include "branchesmanage.h"
 #include "branchmanage.h"
 #include "mainwindow.h"
 #include "sellermanage.h"
@@ -32,6 +33,8 @@ void MainWindow::onBranchClicked()
 
 void MainWindow::onBranchesClicked()
 {
+    BranchesManage *bm = new BranchesManage(this->user);
+    bm->show();
 }
 
 void MainWindow::onSellClicked()
