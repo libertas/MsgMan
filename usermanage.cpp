@@ -38,6 +38,10 @@ UserManage::UserManage(User *u) :
         ui->tableWidget->setItem(0, 0, itemName);
         ui->tableWidget->setItem(0, 1, itemPassword);
         ui->tableWidget->setItem(0, 2, itemIsRoot);
+
+        delete itemName;
+        delete itemPassword;
+        delete itemIsRoot;
     }
 }
 
