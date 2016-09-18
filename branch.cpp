@@ -18,7 +18,7 @@ bool Branch::Init()
 
     QSqlQuery query("", Branch::db);
     query.exec("CREATE TABLE IF NOT EXISTS branches (id, name, addr)");
-    query.exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_id ON branches (id)");
+    query.exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_branch_id ON branches (id)");
 
     Branch::db.commit();
     Branch::db.close();

@@ -17,7 +17,7 @@ bool Seller::Init()
 
     QSqlQuery query("", Seller::db);
     query.exec("CREATE TABLE IF NOT EXISTS sellers (id, name, age, sex, basicSalary, percentage, branchId)");
-    query.exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_id ON sellers (id)");
+    query.exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_seller_id ON sellers (id)");
 
     Seller::db.commit();
     Seller::db.close();
