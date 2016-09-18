@@ -31,6 +31,7 @@ SellerManage::SellerManage(User *u) :
 
         row++;
     }
+    delete sellers;
 }
 
 SellerManage::~SellerManage()

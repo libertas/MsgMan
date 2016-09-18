@@ -206,7 +206,7 @@ QString Branch::getAddr() const
 
 QList<Seller> *Branch::getSellers()
 {
-    return &sellers;
+    return &this->sellers;
 }
 
 bool Branch::isValid()

@@ -20,6 +20,7 @@ UserManage::UserManage(User *u) :
 
             row++;
         }
+        delete users;
     } else {
         ui->addButton->hide();
         ui->deleteButton->hide();

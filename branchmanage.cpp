@@ -46,6 +46,7 @@ void BranchManage::onOpenClicked()
 
         row++;
     }
+    delete b;
 }
 
 void BranchManage::onSaveClicked()

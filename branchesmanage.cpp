@@ -27,6 +27,7 @@ BranchesManage::BranchesManage(User *u) :
 
         row++;
     }
+    delete branches;
 }
 
 BranchesManage::~BranchesManage()
