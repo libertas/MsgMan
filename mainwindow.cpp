@@ -1,5 +1,6 @@
 #include "branchesmanage.h"
 #include "branchmanage.h"
+#include "goodmanage.h"
 #include "mainwindow.h"
 #include "sellermanage.h"
 #include "ui_mainwindow.h"
@@ -49,4 +50,10 @@ void MainWindow::onSellerClicked()
 {
     SellerManage *sm = new SellerManage(this->user);
     sm->show();
+}
+
+void MainWindow::onGoodClicked()
+{
+    GoodManage *gm = new GoodManage(this->user);
+    gm->show();
 }

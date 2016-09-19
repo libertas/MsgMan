@@ -27,6 +27,7 @@ public slots:
     void onSellClicked();
     void onSearchClicked();
     void onSellerClicked();
+    void onGoodClicked();
 };
 
 #endif // MAINWINDOW_H
