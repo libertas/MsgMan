@@ -13,12 +13,12 @@ class UserManage : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit UserManage(User *u);
+    explicit UserManage(QSharedPointer<User> u);
     ~UserManage();
 
 private:
     Ui::UserManage *ui;
-    User *user;
+    QSharedPointer<User> user;
 
 public slots:
     void onApplyClicked();

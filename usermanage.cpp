@@ -2,7 +2,7 @@
 #include "usermanage.h"
 #include "ui_usermanage.h"
 
-UserManage::UserManage(User *u) :
+UserManage::UserManage(QSharedPointer<User> u) :
     QMainWindow(0),
     ui(new Ui::UserManage)
 {
@@ -10,7 +10,7 @@ UserManage::UserManage(User *u) :
     this->user = u;
 
     if(this->user->getIsRoot()) {
-        QList<User> *users = User::getUsers();
+        QSharedPointer<QList<User>> users = User::getUsers();
         long row = 0;
         for(QList<User>::Iterator iter = users->begin(); iter != users->end(); iter++) {
             ui->tableWidget->setRowCount(ui->tableWidget->rowCount() + 1);
@@ -20,7 +20,6 @@ UserManage::UserManage(User *u) :
 
             row++;
         }
-        delete users;
     } else {
         ui->addButton->hide();
         ui->deleteButton->hide();
@@ -60,12 +59,12 @@ void UserManage::onApplyClicked()
                               ui->tableWidget->item(row, 1)->data(Qt::DisplayRole).toString(),
                               ui->tableWidget->item(row, 2)->data(Qt::DisplayRole).toBool()));
         }
-        User::Modify(&users);
+        User::Modify(users);
     } else {
-        User *u = new User(this->user->getName(),
-                           ui->tableWidget->item(0, 1)->data(Qt::DisplayRole).toString(),
-                           false);
-        this->user->copy(u);
+        QSharedPointer<User> u(new User(this->user->getName(),
+                                   ui->tableWidget->item(0, 1)->data(Qt::DisplayRole).toString(),
+                                   false));
+        this->user->copy(*u);
         this->user->save();
     }
 }

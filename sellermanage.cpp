@@ -2,7 +2,7 @@
 #include "sellermanage.h"
 #include "ui_sellermanage.h"
 
-SellerManage::SellerManage(User *u) :
+SellerManage::SellerManage(QSharedPointer<User> u) :
     QWidget(0),
     ui(new Ui::SellerManage)
 {
@@ -17,7 +17,7 @@ SellerManage::SellerManage(User *u) :
     }
 
     long row = 0;
-    QList<Seller> *sellers = Seller::getSellers();
+    QSharedPointer<QList<Seller>> sellers(Seller::getSellers());
     for(QList<Seller>::Iterator iter = sellers->begin(); iter != sellers->end(); iter++) {
         ui->tableWidget->setRowCount(ui->tableWidget->rowCount() + 1);
 
@@ -31,7 +31,6 @@ SellerManage::SellerManage(User *u) :
 
         row++;
     }
-    delete sellers;
 }
 
 SellerManage::~SellerManage()
@@ -54,7 +53,7 @@ void SellerManage::onApplyClicked()
             seller.setPercentage(ui->tableWidget->item(row, 6)->data(Qt::DisplayRole).toDouble());
             sellers.append(seller);
         }
-        Seller::Modify(&sellers);
+        Seller::Modify(sellers);
     }
 }
 

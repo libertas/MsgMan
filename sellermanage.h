@@ -13,12 +13,12 @@ class SellerManage : public QWidget
     Q_OBJECT
 
 public:
-    explicit SellerManage(User *u);
+    explicit SellerManage(QSharedPointer<User> u);
     ~SellerManage();
 
 private:
     Ui::SellerManage *ui;
-    User *user;
+    QSharedPointer<User> user;
 
 public slots:
     void onApplyClicked();

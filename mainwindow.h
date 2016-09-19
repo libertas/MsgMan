@@ -13,12 +13,12 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(User *u);
+    explicit MainWindow(QSharedPointer<User> u);
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
-    User *user;
+    QSharedPointer<User> user;
 
 public slots:
     void onUserClicked();

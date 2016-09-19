@@ -10,21 +10,21 @@ class Branch
 public:
     static bool Init();
     static bool End();
-    static Branch *CreateById(long id);
-    static QList<Branch> *getBranches();
-    static bool Modify(QList<Branch> *branches);
+    static QSharedPointer<Branch> CreateById(long id);
+    static QSharedPointer<QList<Branch>> getBranches();
+    static bool Modify(const QList<Branch> &branches);
 
     Branch(long id, QString name, QString addr, QList<Seller> sellers);
 
-    bool addSeller(Seller *s);
-    bool removeSeller(Seller *s);
-    bool replaceSeller(Seller *s);
+    bool addSeller(const Seller &s);
+    bool removeSeller(const Seller &s);
+    bool replaceSeller(const Seller &s);
     bool save();
 
     long getId() const;
     QString getName() const;
     QString getAddr() const;
-    QList<Seller> *getSellers();
+    QSharedPointer<QList<Seller>> getSellers();
 
 private:
     static QSqlDatabase db;

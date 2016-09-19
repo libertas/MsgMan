@@ -2,7 +2,7 @@
 #include "branchesmanage.h"
 #include "ui_branchesmanage.h"
 
-BranchesManage::BranchesManage(User *u) :
+BranchesManage::BranchesManage(QSharedPointer<User> u) :
     QWidget(0),
     ui(new Ui::BranchesManage)
 {
@@ -17,7 +17,7 @@ BranchesManage::BranchesManage(User *u) :
         this->ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     }
 
-    QList<Branch> *branches = Branch::getBranches();
+    QSharedPointer<QList<Branch>> branches = Branch::getBranches();
     long row = 0;
     for(QList<Branch>::Iterator iter = branches->begin(); iter != branches->end(); iter++) {
         ui->tableWidget->setRowCount(ui->tableWidget->rowCount() + 1);
@@ -27,7 +27,6 @@ BranchesManage::BranchesManage(User *u) :
 
         row++;
     }
-    delete branches;
 }
 
 BranchesManage::~BranchesManage()
@@ -45,7 +44,7 @@ void BranchesManage::onApplyClicked()
                                ui->tableWidget->item(row, 2)->data(Qt::DisplayRole).toString(),
                                QList<Seller>()));
     }
-    Branch::Modify(&branches);
+    Branch::Modify(branches);
 }
 
 void BranchesManage::onResetClicked()

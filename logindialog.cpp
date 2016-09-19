@@ -28,7 +28,7 @@ void LoginDialog::onLogin()
     QString username = ui->usernameEdit->text();
     QString password = ui->passwordEdit->text();
 
-    User *u = new User(username, password);
+    QSharedPointer<User> u(new User(username, password));
 
     if(users->indexOf(*u) >= 0) {
         this->close();

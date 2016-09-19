@@ -3,7 +3,7 @@
 #include "seller.h"
 #include "ui_branchmanage.h"
 
-BranchManage::BranchManage(User *u) :
+BranchManage::BranchManage(QSharedPointer<User> u) :
     QWidget(0),
     ui(new Ui::BranchManage)
 {
@@ -24,14 +24,14 @@ BranchManage::~BranchManage()
 void BranchManage::onOpenClicked()
 {
     long id = ui->idEdit->text().toLong();
-    Branch *b = Branch::CreateById(id);
+    QSharedPointer<Branch> b = Branch::CreateById(id);
 
     ui->nameEdit->setText(b->getName());
     ui->addrEdit->setText(b->getAddr());
 
     long row = 0;
     ui->tableWidget->setRowCount(row);
-    QList<Seller> *sellers = b->getSellers();
+    QSharedPointer<QList<Seller>> sellers = b->getSellers();
 
     for(QList<Seller>::Iterator iter = sellers->begin(); iter != sellers->end(); iter++) {
         ui->tableWidget->setRowCount(ui->tableWidget->rowCount() + 1);
@@ -46,7 +46,6 @@ void BranchManage::onOpenClicked()
 
         row++;
     }
-    delete b;
 }
 
 void BranchManage::onSaveClicked()

@@ -36,7 +36,7 @@ bool Seller::End()
     return true;
 }
 
-Seller *Seller::CreateById(long id)
+QSharedPointer<Seller> Seller::CreateById(long id)
 {
     assert(Seller::initialized);
     QString name;
@@ -62,13 +62,13 @@ Seller *Seller::CreateById(long id)
 
     Seller::db.close();
 
-    Seller *s = new Seller(id, name, age, sex, branchId);
+    QSharedPointer<Seller> s(new Seller(id, name, age, sex, branchId));
     s->setBasicSalary(basicSalary);
     s->setPercentage(percentage);
     return s;
 }
 
-bool Seller::Modify(QList<Seller> *sellers)
+bool Seller::Modify(const QList<Seller> &sellers)
 {
     assert(Seller::initialized);
     Seller::db.open();
@@ -77,7 +77,7 @@ bool Seller::Modify(QList<Seller> *sellers)
     query.prepare("DELETE FROM sellers");
     query.exec();
 
-    for(QList<Seller>::Iterator iter = sellers->begin(); iter != sellers->end(); iter++) {
+    for(QList<Seller>::const_iterator iter = sellers.begin(); iter != sellers.end(); iter++) {
         query.prepare("REPLACE INTO sellers VALUES (?, ?, ?, ?, ?, ?, ?)");
         query.addBindValue(QString::number(iter->getId(), 10));
         query.addBindValue(iter->getName());
@@ -104,20 +104,20 @@ Seller::Seller(long id, QString name, short age, bool sex, long branchId)
     this->branchId = branchId;
 }
 
-void Seller::replace(Seller *s)
+void Seller::replace(const Seller &s)
 {
-    this->id = s->id;
-    this->name = s->name;
-    this->age = s->age;
-    this->sex = s->sex;
-    this->branchId = branchId;
+    this->id = s.id;
+    this->name = s.name;
+    this->age = s.age;
+    this->sex = s.sex;
+    this->branchId = s.branchId;
 }
 
-void Seller::copy(Seller *s)
+void Seller::copy(const Seller &s)
 {
     this->replace(s);
-    this->basicSalary = s->basicSalary;
-    this->percentage = s->percentage;
+    this->basicSalary = s.basicSalary;
+    this->percentage = s.percentage;
 }
 
 bool Seller::save()
@@ -151,9 +151,9 @@ void Seller::setPercentage(double percentage)
     this->percentage = percentage;
 }
 
-QList<Seller> *Seller::getSellers()
+QSharedPointer<QList<Seller>> Seller::getSellers()
 {
-    QList<Seller> *sellers = new QList<Seller>;
+    QSharedPointer<QList<Seller>> sellers(new QList<Seller>);
 
     Seller::db.open();
 

@@ -35,11 +35,11 @@ bool User::End()
     return true;
 }
 
-QList<User> *User::getUsers()
+QSharedPointer<QList<User>> User::getUsers()
 {
     assert(User::initialized);
 
-    QList<User> *users = new QList<User>;
+    QSharedPointer<QList<User>> users(new QList<User>);
 
     User::db.open();
     QSqlQuery query("", User::db);
@@ -59,7 +59,7 @@ QList<User> *User::getUsers()
 bool User::noRootUser()
 {
     assert(User::initialized);
-    QList<User> *users = User::getUsers();
+    QSharedPointer<QList<User>> users = User::getUsers();
     for(QList<User>::Iterator iter = users->begin(); iter != users->end(); iter++) {
         if(iter->isRoot == true) {
             return false;
@@ -68,7 +68,7 @@ bool User::noRootUser()
     return true;
 }
 
-bool User::Modify(QList<User> *users)
+bool User::Modify(const QList<User> &users)
 {
     assert(User::initialized);
     User::db.open();
@@ -77,7 +77,7 @@ bool User::Modify(QList<User> *users)
     query.prepare("DELETE FROM users");
     query.exec();
 
-    for(QList<User>::Iterator iter = users->begin(); iter != users->end(); iter++) {
+    for(QList<User>::const_iterator iter = users.begin(); iter != users.end(); iter++) {
         query.prepare("REPLACE INTO users VALUES (?, ?, ?)");
         query.addBindValue(iter->getName());
         query.addBindValue(iter->getPassword());
@@ -168,11 +168,11 @@ bool User::save()
     return true;
 }
 
-void User::copy(User *u)
+void User::copy(const User &u)
 {
     assert(User::initialized);
 
-    this->name = u->getName();
-    this->password = u->getPassword();
-    this->isRoot = u->getIsRoot();
+    this->name = u.getName();
+    this->password = u.getPassword();
+    this->isRoot = u.getIsRoot();
 }

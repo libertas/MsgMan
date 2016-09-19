@@ -38,7 +38,7 @@ bool Branch::End()
     return true;
 }
 
-Branch *Branch::CreateById(long id)
+QSharedPointer<Branch> Branch::CreateById(long id)
 {
     assert(Branch::initialized);
 
@@ -76,13 +76,13 @@ Branch *Branch::CreateById(long id)
 
     Seller::getDb().close();
 
-    Branch *b = new Branch(id, name, addr, sellers);
+    QSharedPointer<Branch> b(new Branch(id, name, addr, sellers));
     return b;
 }
 
-QList<Branch> *Branch::getBranches()
+QSharedPointer<QList<Branch>> Branch::getBranches()
 {
-    QList<Branch> *branches = new QList<Branch>;
+    QSharedPointer<QList<Branch>> branches(new QList<Branch>);
     QList<long> ids;
 
     Branch::db.open();
@@ -103,7 +103,7 @@ QList<Branch> *Branch::getBranches()
     return branches;
 }
 
-bool Branch::Modify(QList<Branch> *branches)
+bool Branch::Modify(const QList<Branch> &branches)
 {
     assert(Branch::initialized);
     Branch::db.open();
@@ -112,7 +112,7 @@ bool Branch::Modify(QList<Branch> *branches)
     query.prepare("DELETE FROM branches");
     query.exec();
 
-    for(QList<Branch>::Iterator iter = branches->begin(); iter != branches->end(); iter++) {
+    for(QList<Branch>::const_iterator iter = branches.begin(); iter != branches.end(); iter++) {
         query.prepare("REPLACE INTO branches VALUES (?, ?, ?)");
         query.addBindValue(QString::number(iter->getId(), 10));
         query.addBindValue(iter->getName());
@@ -133,36 +133,36 @@ Branch::Branch(long id, QString name, QString addr, QList<Seller> sellers)
     this->sellers = sellers;
 }
 
-bool Branch::addSeller(Seller *s)
+bool Branch::addSeller(const Seller &s)
 {
-    int index = this->sellers.indexOf(*s);
+    int index = this->sellers.indexOf(s);
     if(index >= 0) {
-        this->sellers.replace(index, *s);
+        this->sellers.replace(index, s);
     } else {
-        this->sellers.append(*s);
+        this->sellers.append(s);
     }
 
     return true;
 }
 
-bool Branch::removeSeller(Seller *s)
+bool Branch::removeSeller(const Seller &s)
 {
-    return bool(this->sellers.removeAll(*s));
+    return bool(this->sellers.removeAll(s));
 }
 
-bool Branch::replaceSeller(Seller *s)
+bool Branch::replaceSeller(const Seller &s)
 {
-    int index = this->sellers.indexOf(*s);
+    int index = this->sellers.indexOf(s);
     if(index >= 0) {
         Seller s1 = this->sellers.at(index);
 
-        this->removeSeller(&s1);
+        this->removeSeller(s1);
 
         s1.replace(s);
 
-        this->addSeller(&s1);
+        this->addSeller(s1);
     } else {
-        this->sellers.append(*s);
+        this->sellers.append(s);
     }
 
     return true;
@@ -204,9 +204,9 @@ QString Branch::getAddr() const
     return this->addr;
 }
 
-QList<Seller> *Branch::getSellers()
+QSharedPointer<QList<Seller>> Branch::getSellers()
 {
-    return &this->sellers;
+    return QSharedPointer<QList<Seller>>(new QList<Seller>(this->sellers));
 }
 
 bool Branch::isValid()

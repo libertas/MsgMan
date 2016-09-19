@@ -10,15 +10,15 @@ class Seller
 public:
     static bool Init();
     static bool End();
-    static Seller *CreateById(long id);
-    static bool Modify(QList<Seller> *sellers);
-    static QList<Seller> *getSellers();
+    static QSharedPointer<Seller> CreateById(long id);
+    static bool Modify(const QList<Seller> &sellers);
+    static QSharedPointer<QList<Seller>> getSellers();
     static QSqlDatabase getDb();
 
     Seller(long id, QString name, short age, bool sex, long branchId);
 
-    void replace(Seller *s);
-    void copy(Seller *s);
+    void replace(const Seller &s);
+    void copy(const Seller &s);
     bool save();
     void setBasicSalary(int basicSalary);
     void setPercentage(double percentage);

@@ -13,12 +13,12 @@ class BranchesManage : public QWidget
     Q_OBJECT
 
 public:
-    explicit BranchesManage(User *u);
+    explicit BranchesManage(QSharedPointer<User> u);
     ~BranchesManage();
 
 private:
     Ui::BranchesManage *ui;
-    User *user;
+    QSharedPointer<User> user;
 
 public slots:
     void onApplyClicked();

@@ -6,7 +6,7 @@
 #include "usermanage.h"
 
 
-MainWindow::MainWindow(User *u) :
+MainWindow::MainWindow(QSharedPointer<User> u) :
     QMainWindow(0),
     ui(new Ui::MainWindow)
 {
