@@ -58,6 +58,13 @@ QSharedPointer<Seller> Seller::CreateById(long id)
         branchId = query.value(4).toInt();
         basicSalary = query.value(5).toInt();
         percentage = query.value(6).toDouble();
+    } else {
+        name = "";
+        age = 0;
+        sex = 0;
+        branchId = 0;
+        basicSalary = 0;
+        percentage = 0;
     }
 
     Seller::db.close();

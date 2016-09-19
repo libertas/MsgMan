@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     branch.cpp \
     branchmanage.cpp \
     sellermanage.cpp \
-    branchesmanage.cpp
+    branchesmanage.cpp \
+    good.cpp
 
 HEADERS  += mainwindow.h \
     logindialog.h \
@@ -31,7 +32,8 @@ HEADERS  += mainwindow.h \
     branch.h \
     branchmanage.h \
     sellermanage.h \
-    branchesmanage.h
+    branchesmanage.h \
+    good.h
 
 FORMS    += mainwindow.ui \
     logindialog.ui \
