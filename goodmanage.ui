@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Add Seller</string>
+    <string>Add Good</string>
    </property>
   </widget>
   <widget class="QPushButton" name="resetButton">
@@ -77,7 +77,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Delete Seller</string>
+    <string>Delete Good</string>
    </property>
   </widget>
   <widget class="QPushButton" name="applyButton">

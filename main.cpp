@@ -2,6 +2,7 @@
 #include <QApplication>
 #include "user.h"
 #include "branch.h"
+#include "good.h"
 #include "seller.h"
 
 int main(int argc, char *argv[])
@@ -11,6 +12,7 @@ int main(int argc, char *argv[])
     User::Init();
     Branch::Init();
     Seller::Init();
+    Good::Init();
 
     LoginDialog ld;
     ld.show();
@@ -20,6 +22,7 @@ int main(int argc, char *argv[])
     User::End();
     Branch::End();
     Seller::End();
+    Good::End();
 
     return re;
 }
