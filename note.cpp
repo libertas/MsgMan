@@ -16,7 +16,7 @@ bool Note::Init()
     Note::db.open();
 
     QSqlQuery query("", Note::db);
-    query.exec("CREATE TABLE IF NOT EXISTS notes (time, id, sellerId, goodId)");
+    query.exec("CREATE TABLE IF NOT EXISTS notes (date, id, sellerId, goodId)");
 
     Note::db.commit();
     Note::db.close();
@@ -35,7 +35,7 @@ bool Note::End()
     return true;
 }
 
-QSharedPointer<Note> Note::CreateByTimeId(QDateTime time, int id)
+QSharedPointer<Note> Note::CreateBydateId(QDate date, int id)
 {
     assert(Note::initialized);
     long sellerId;
@@ -44,9 +44,9 @@ QSharedPointer<Note> Note::CreateByTimeId(QDateTime time, int id)
     Note::db.open();
     QSqlQuery query("", Note::db);
 
-    query.prepare("SELECT * FROM notes WHERE (id=? AND time = ?)");
+    query.prepare("SELECT * FROM notes WHERE (id=? AND date = ?)");
     query.addBindValue(QString::number(id, 10));
-    query.addBindValue(time.toString());
+    query.addBindValue(date.toString());
     if(query.exec() && query.next()) {
         sellerId = query.value(2).toInt();
         goodId = query.value(3).toInt();
@@ -57,7 +57,7 @@ QSharedPointer<Note> Note::CreateByTimeId(QDateTime time, int id)
 
     Note::db.close();
 
-    QSharedPointer<Note> s(new Note(time, id, sellerId, goodId));
+    QSharedPointer<Note> s(new Note(date, id, sellerId, goodId));
     return s;
 }
 
@@ -74,7 +74,7 @@ QSharedPointer<QList<Note> > Note::getNotes()
     query.prepare("SELECT * FROM notes");
     query.exec();
     while(query.next()) {
-        Note note = Note(QDateTime::fromString(query.value(0).toString(), "yyyy-MM-dd hh:mm:ss"),
+        Note note = Note(QDate::fromString(query.value(0).toString(), "yyyy-MM-dd"),
                          query.value(1).toInt(),
                          query.value(2).toInt(),
                          query.value(3).toInt());
@@ -97,7 +97,7 @@ bool Note::Modify(const QList<Note> &notes)
 
     for(QList<Note>::const_iterator iter = notes.begin(); iter != notes.end(); iter++) {
         query.prepare("REPLACE INTO notes VALUES (?, ?, ?, ?)");
-        query.addBindValue(iter->getTime().toString());
+        query.addBindValue(iter->getDate().toString());
         query.addBindValue(QString::number(iter->getId(), 10));
         query.addBindValue(QString::number(iter->getSellerId()));
         query.addBindValue(QString::number(iter->getGoodId()));
@@ -110,11 +110,11 @@ bool Note::Modify(const QList<Note> &notes)
     return true;
 }
 
-Note::Note(QDateTime time, int id, long noteId, long goodId)
+Note::Note(QDate date, int id, long noteId, long goodId)
 {
     assert(Note::initialized);
 
-    this->time = time;
+    this->date = date;
     this->id = id;
     this->sellerId = noteId;
     this->goodId = goodId;
@@ -127,9 +127,9 @@ bool Note::save()
     return true;
 }
 
-QDateTime Note::getTime() const
+QDate Note::getDate() const
 {
-    return this->time;
+    return this->date;
 }
 
 int Note::getId() const

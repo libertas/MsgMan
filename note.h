@@ -2,7 +2,7 @@
 #define NOTE_H
 
 #include "good.h"
-#include <QDateTime>
+#include <QDate>
 
 
 class Note
@@ -10,15 +10,15 @@ class Note
 public:
     static bool Init();
     static bool End();
-    static QSharedPointer<Note> CreateByTimeId(QDateTime time, int id);
+    static QSharedPointer<Note> CreateBydateId(QDate date, int id);
     static QSharedPointer<QList<Note>> getNotes();
     static bool Modify(const QList<Note> &notes);
 
-    Note(QDateTime time, int id, long sellerId, long goodId);
+    Note(QDate date, int id, long sellerId, long goodId);
 
     bool save();
 
-    QDateTime getTime() const;
+    QDate getDate() const;
     int getId() const;
     long getSellerId() const;
     long getGoodId() const;
@@ -27,7 +27,7 @@ private:
     static QSqlDatabase db;
     static bool initialized;
 
-    QDateTime time;
+    QDate date;
     int id;
     long sellerId;
     long goodId;
