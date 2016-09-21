@@ -24,7 +24,7 @@ public slots:
     void onUserClicked();
     void onBranchClicked();
     void onBranchesClicked();
-    void onSellClicked();
+    void onNoteClicked();
     void onSearchClicked();
     void onSellerClicked();
     void onGoodClicked();

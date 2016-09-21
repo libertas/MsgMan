@@ -2,6 +2,7 @@
 #include "branchmanage.h"
 #include "goodmanage.h"
 #include "mainwindow.h"
+#include "notemanage.h"
 #include "sellermanage.h"
 #include "ui_mainwindow.h"
 #include "usermanage.h"
@@ -38,8 +39,10 @@ void MainWindow::onBranchesClicked()
     bm->show();
 }
 
-void MainWindow::onSellClicked()
+void MainWindow::onNoteClicked()
 {
+    NoteManage *nm = new NoteManage(this->user);
+    nm->show();
 }
 
 void MainWindow::onSearchClicked()

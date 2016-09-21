@@ -61,6 +61,32 @@ QSharedPointer<Note> Note::CreateBydateId(QDate date, int id)
     return s;
 }
 
+QSharedPointer<QList<Note> > Note::getNotesByDate(QDate date)
+{
+    assert(Note::initialized);
+
+    QSharedPointer<QList<Note>> notes(new QList<Note>);
+
+    Note::db.open();
+
+    QSqlQuery query("", Note::db);
+
+    query.prepare("SELECT * FROM notes WHERE date=?");
+    query.addBindValue(date.toString());
+    query.exec();
+    while(query.next()) {
+        Note note = Note(QDate::fromString(query.value(0).toString(), "yyyy-MM-dd"),
+                         query.value(1).toInt(),
+                         query.value(2).toInt(),
+                         query.value(3).toInt());
+        notes->append(note);
+    }
+
+    Note::db.close();
+
+    return notes;
+}
+
 QSharedPointer<QList<Note> > Note::getNotes()
 {
     assert(Note::initialized);
