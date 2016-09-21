@@ -14,12 +14,13 @@ public:
     static QSharedPointer<QList<Note>> getNotes();
     static bool Modify(const QList<Note> &notes);
 
-    Note(QDateTime time, int id, long goodId);
+    Note(QDateTime time, int id, long sellerId, long goodId);
 
     bool save();
 
     QDateTime getTime() const;
     int getId() const;
+    long getSellerId() const;
     long getGoodId() const;
 
 private:
@@ -28,6 +29,7 @@ private:
 
     QDateTime time;
     int id;
+    long sellerId;
     long goodId;
 };
 
