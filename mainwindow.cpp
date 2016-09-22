@@ -45,10 +45,6 @@ void MainWindow::onNoteClicked()
     nm->show();
 }
 
-void MainWindow::onSearchClicked()
-{
-}
-
 void MainWindow::onSellerClicked()
 {
     SellerManage *sm = new SellerManage(this->user);
