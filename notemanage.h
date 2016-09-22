@@ -2,6 +2,7 @@
 #define NOTEMANAGE_H
 
 #include "user.h"
+#include <QTableWidget>
 #include <QWidget>
 
 namespace Ui {
@@ -26,6 +27,7 @@ public slots:
     void onAddClicked();
     void onDeleteClicked();
     void onOpenClicked();
+    void onItemChanged(QTableWidgetItem *item);
 };
 
 #endif // NOTEMANAGE_H

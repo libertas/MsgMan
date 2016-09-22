@@ -135,3 +135,39 @@ void NoteManage::onOpenClicked()
         ed->show();
     }
 }
+
+void NoteManage::onItemChanged(QTableWidgetItem *item)
+{
+    QSharedPointer<Seller> seller;
+    QSharedPointer<Good> good;
+    QTableWidgetItem *sellerNameItem;
+    QTableWidgetItem *goodNameItem;
+    QTableWidgetItem *goodPriceItem;
+    long sellerId;
+    long goodId;
+
+
+    int row = item->row();
+    int col = item->column();
+
+    if(item->isSelected()) {
+        switch(col) {
+        case 1:
+            sellerNameItem = ui->tableWidget->item(row, col + 1);
+            sellerId = item->data(Qt::DisplayRole).toInt();
+            seller = Seller::CreateById(sellerId);
+            sellerNameItem->setText(seller->getName());
+            break;
+        case 3:
+            goodNameItem = ui->tableWidget->item(row, col + 1);
+            goodPriceItem = ui->tableWidget->item(row, col + 2);
+            goodId = item->data(Qt::DisplayRole).toInt();
+            good = Good::CreateById(goodId);
+            goodNameItem->setText(good->getName());
+            goodPriceItem->setText(QString::number(good->getPrice(), 10));
+            break;
+        default:
+            break;
+        }
+    }
+}
