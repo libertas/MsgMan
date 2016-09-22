@@ -25,6 +25,7 @@ public slots:
     void onResetClicked();
     void onAddClicked();
     void onDeleteClicked();
+    void onOpenClicked();
 };
 
 #endif // NOTEMANAGE_H

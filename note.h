@@ -10,7 +10,7 @@ class Note
 public:
     static bool Init();
     static bool End();
-    static QSharedPointer<Note> CreateBydateId(QDate date, int id);
+    static QSharedPointer<Note> CreateByDateId(QDate date, int id);
     static QSharedPointer<QList<Note>> getNotesByDate(QDate date);
     static QSharedPointer<QList<Note>> getNotes();
     static bool Modify(const QList<Note> &notes);

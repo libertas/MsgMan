@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     good.cpp \
     goodmanage.cpp \
     note.cpp \
-    notemanage.cpp
+    notemanage.cpp \
+    errordialog.cpp
 
 HEADERS  += mainwindow.h \
     logindialog.h \
@@ -39,7 +40,8 @@ HEADERS  += mainwindow.h \
     good.h \
     goodmanage.h \
     note.h \
-    notemanage.h
+    notemanage.h \
+    errordialog.h
 
 FORMS    += mainwindow.ui \
     logindialog.ui \
@@ -48,4 +50,5 @@ FORMS    += mainwindow.ui \
     sellermanage.ui \
     branchesmanage.ui \
     goodmanage.ui \
-    notemanage.ui
+    notemanage.ui \
+    errordialog.ui

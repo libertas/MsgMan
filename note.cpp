@@ -35,7 +35,7 @@ bool Note::End()
     return true;
 }
 
-QSharedPointer<Note> Note::CreateBydateId(QDate date, int id)
+QSharedPointer<Note> Note::CreateByDateId(QDate date, int id)
 {
     assert(Note::initialized);
     long sellerId;
@@ -46,7 +46,7 @@ QSharedPointer<Note> Note::CreateBydateId(QDate date, int id)
 
     query.prepare("SELECT * FROM notes WHERE (id=? AND date = ?)");
     query.addBindValue(QString::number(id, 10));
-    query.addBindValue(date.toString());
+    query.addBindValue(date.toString("yyyy-MM-dd"));
     if(query.exec() && query.next()) {
         sellerId = query.value(2).toInt();
         goodId = query.value(3).toInt();
@@ -72,7 +72,7 @@ QSharedPointer<QList<Note> > Note::getNotesByDate(QDate date)
     QSqlQuery query("", Note::db);
 
     query.prepare("SELECT * FROM notes WHERE date=?");
-    query.addBindValue(date.toString());
+    query.addBindValue(date.toString("yyyy-MM-dd"));
     query.exec();
     while(query.next()) {
         Note note = Note(QDate::fromString(query.value(0).toString(), "yyyy-MM-dd"),
@@ -123,7 +123,7 @@ bool Note::Modify(const QList<Note> &notes)
 
     for(QList<Note>::const_iterator iter = notes.begin(); iter != notes.end(); iter++) {
         query.prepare("REPLACE INTO notes VALUES (?, ?, ?, ?)");
-        query.addBindValue(iter->getDate().toString());
+        query.addBindValue(iter->getDate().toString("yyyy-MM-dd"));
         query.addBindValue(QString::number(iter->getId(), 10));
         query.addBindValue(QString::number(iter->getSellerId()));
         query.addBindValue(QString::number(iter->getGoodId()));

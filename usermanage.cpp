@@ -22,6 +22,7 @@ UserManage::UserManage(QSharedPointer<User> u) :
         }
     } else {
         ui->addButton->hide();
+        ui->applyButton->hide();
         ui->deleteButton->hide();
 
         ui->tableWidget->setRowCount(1);

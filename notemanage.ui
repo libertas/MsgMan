@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Sold Note Manage</string>
   </property>
   <widget class="QTableWidget" name="tableWidget">
    <property name="geometry">
@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="editTriggers">
-    <set>QAbstractItemView::NoEditTriggers</set>
+    <set>QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
    </property>
    <column>
     <property name="text">
@@ -32,7 +32,7 @@
    </column>
    <column>
     <property name="text">
-     <string>Seller Name</string>
+     <string>Seller ID</string>
     </property>
    </column>
    <column>
@@ -146,5 +146,93 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>addButton</sender>
+   <signal>clicked()</signal>
+   <receiver>NoteManage</receiver>
+   <slot>onAddClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>60</x>
+     <y>543</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>66</x>
+     <y>561</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>deleteButton</sender>
+   <signal>clicked()</signal>
+   <receiver>NoteManage</receiver>
+   <slot>onDeleteClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>232</x>
+     <y>545</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>231</x>
+     <y>562</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>applyButton</sender>
+   <signal>clicked()</signal>
+   <receiver>NoteManage</receiver>
+   <slot>onApplyClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>593</x>
+     <y>542</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>595</x>
+     <y>573</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>resetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>NoteManage</receiver>
+   <slot>onResetClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>772</x>
+     <y>550</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>774</x>
+     <y>570</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>openButton</sender>
+   <signal>clicked()</signal>
+   <receiver>NoteManage</receiver>
+   <slot>onOpenClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>364</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>395</x>
+     <y>21</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onAddClicked()</slot>
+  <slot>onDeleteClicked()</slot>
+  <slot>onApplyClicked()</slot>
+  <slot>onResetClicked()</slot>
+  <slot>onOpenClicked()</slot>
+ </slots>
 </ui>

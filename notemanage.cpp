@@ -1,3 +1,7 @@
+#include "errordialog.h"
+#include "good.h"
+#include "note.h"
+#include "seller.h"
 #include "notemanage.h"
 #include "ui_notemanage.h"
 
@@ -12,6 +16,8 @@ NoteManage::NoteManage(QSharedPointer<User> u) :
         this->ui->addButton->hide();
         this->ui->deleteButton->hide();
         this->ui->applyButton->hide();
+
+        this->ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     }
 }
 
@@ -22,20 +28,88 @@ NoteManage::~NoteManage()
 
 void NoteManage::onApplyClicked()
 {
+    if(this->user->getIsRoot()) {
+        QList<Note> notes;
 
+        QString dateStr = ui->dateEdit->text();
+        QDate date = QDate::fromString(dateStr, "yyyy-MM-dd");
+        if(date.isValid()) {
+            for(long row = 0; row != ui->tableWidget->rowCount(); row++) {
+
+                    int id = ui->tableWidget->item(row, 0)->data(Qt::DisplayRole).toInt();
+                    long sellerId = ui->tableWidget->item(row, 1)->data(Qt::DisplayRole).toInt();
+                    long goodId = ui->tableWidget->item(row, 3)->data(Qt::DisplayRole).toInt();
+
+                    Note note(date, id, sellerId, goodId);
+                    notes.append(note);
+            }
+
+            Note::Modify(notes);
+        } else {
+            ErrorDialog *ed = new ErrorDialog(this, "Invalid Date");
+            ed->show();
+        }
+    }
 }
 
 void NoteManage::onResetClicked()
 {
-
+    NoteManage *nm = new NoteManage(this->user);
+    this->close();
+    nm->show();
 }
 
 void NoteManage::onAddClicked()
 {
-
+    if(this->user->getIsRoot()) {
+        ui->tableWidget->setRowCount(ui->tableWidget->rowCount() + 1);
+        ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 0, new QTableWidgetItem(QString("0")));
+        ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 1, new QTableWidgetItem(QString("0")));
+        ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 2, new QTableWidgetItem(QString("Seller")));
+        ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 3, new QTableWidgetItem(QString("0")));
+        ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 4, new QTableWidgetItem(QString("Good")));
+        ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 5, new QTableWidgetItem(QString("0")));
+    }
 }
 
 void NoteManage::onDeleteClicked()
 {
+    if(this->user->getIsRoot()) {
+        QList<QTableWidgetSelectionRange> ranges = ui->tableWidget->selectedRanges();
+        for(long i = ranges.count() - 1; i >= 0; i--) {
+            long topRow = ranges.at(i).topRow();
+            long bottomRow = ranges.at(i).bottomRow();
+            for(long j = bottomRow; j >= topRow; j--){
+                ui->tableWidget->removeRow(j);
+            }
+        }
+    }
+}
 
+void NoteManage::onOpenClicked()
+{
+    QString dateStr = ui->dateEdit->text();
+    QDate date = QDate::fromString(dateStr, "yyyy-MM-dd");
+    if(date.isValid()) {
+        QSharedPointer<QList<Note>> notes = Note::getNotesByDate(date);
+
+        for(QList<Note>::Iterator iter = notes->begin(); iter != notes->end(); iter++) {
+            ui->tableWidget->setRowCount(ui->tableWidget->rowCount() + 1);
+            ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 0, new QTableWidgetItem(QString::number(iter->getId(), 10)));
+
+            long sellerId = iter->getSellerId();
+            ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 1, new QTableWidgetItem(QString::number(sellerId, 10)));
+            QSharedPointer<Seller> seller = Seller::CreateById(sellerId);
+            ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 2, new QTableWidgetItem(seller->getName()));
+
+            long goodId = iter->getGoodId();
+            ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 3, new QTableWidgetItem(QString::number(goodId)));
+            QSharedPointer<Good> good = Good::CreateById(goodId);
+            ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 4, new QTableWidgetItem(good->getName()));
+            ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 5, new QTableWidgetItem(QString::number(good->getPrice(), 10)));
+        }
+    } else {
+        ErrorDialog *ed = new ErrorDialog(this, "Invalid Date");
+        ed->show();
+    }
 }
