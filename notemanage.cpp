@@ -65,10 +65,20 @@ void NoteManage::onAddClicked()
         ui->tableWidget->setRowCount(ui->tableWidget->rowCount() + 1);
         ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 0, new QTableWidgetItem(QString("0")));
         ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 1, new QTableWidgetItem(QString("0")));
-        ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 2, new QTableWidgetItem(QString("Seller")));
+
+        QTableWidgetItem *sellerNameItem = new QTableWidgetItem(QString("Seller"));
+        sellerNameItem->setFlags(sellerNameItem->flags() & (~Qt::ItemIsEditable));
+        ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 2, sellerNameItem);
+
         ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 3, new QTableWidgetItem(QString("0")));
-        ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 4, new QTableWidgetItem(QString("Good")));
-        ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 5, new QTableWidgetItem(QString("0")));
+
+        QTableWidgetItem *goodNameItem = new QTableWidgetItem(QString("Good"));
+        goodNameItem->setFlags(goodNameItem->flags() & (~Qt::ItemIsEditable));
+        ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 4, goodNameItem);
+
+        QTableWidgetItem *goodPriceItem = new QTableWidgetItem(QString("0"));
+        goodPriceItem->setFlags(goodPriceItem->flags() & (~Qt::ItemIsEditable));
+        ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 5, goodPriceItem);
     }
 }
 
@@ -95,18 +105,30 @@ void NoteManage::onOpenClicked()
 
         for(QList<Note>::Iterator iter = notes->begin(); iter != notes->end(); iter++) {
             ui->tableWidget->setRowCount(ui->tableWidget->rowCount() + 1);
+
             ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 0, new QTableWidgetItem(QString::number(iter->getId(), 10)));
 
             long sellerId = iter->getSellerId();
+
             ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 1, new QTableWidgetItem(QString::number(sellerId, 10)));
             QSharedPointer<Seller> seller = Seller::CreateById(sellerId);
-            ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 2, new QTableWidgetItem(seller->getName()));
+
+            QTableWidgetItem *sellerNameItem = new QTableWidgetItem(seller->getName());
+            sellerNameItem->setFlags(sellerNameItem->flags() & (~Qt::ItemIsEditable));
+            ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 2, sellerNameItem);
 
             long goodId = iter->getGoodId();
             ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 3, new QTableWidgetItem(QString::number(goodId)));
+
             QSharedPointer<Good> good = Good::CreateById(goodId);
-            ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 4, new QTableWidgetItem(good->getName()));
-            ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 5, new QTableWidgetItem(QString::number(good->getPrice(), 10)));
+
+            QTableWidgetItem *goodNameItem = new QTableWidgetItem(good->getName());
+            goodNameItem->setFlags(goodNameItem->flags() & (~Qt::ItemIsEditable));
+            ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 4, goodNameItem);
+
+            QTableWidgetItem *goodPriceItem = new QTableWidgetItem(QString::number(good->getPrice(), 10));
+            goodPriceItem->setFlags(goodPriceItem->flags() & (~Qt::ItemIsEditable));
+            ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 5, goodPriceItem);
         }
     } else {
         ErrorDialog *ed = new ErrorDialog(this, "Invalid Date");
