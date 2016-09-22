@@ -115,7 +115,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Add Seller</string>
+    <string>Add Note</string>
    </property>
   </widget>
   <widget class="QPushButton" name="resetButton">
@@ -141,7 +141,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Delete Seller</string>
+    <string>Delete Note</string>
    </property>
   </widget>
  </widget>
