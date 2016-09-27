@@ -100,6 +100,8 @@ void NoteManage::onDeleteClicked()
 
 void NoteManage::onOpenClicked()
 {
+    ui->tableWidget->setRowCount(0);
+
     QString dateStr = ui->dateEdit->text();
     QDate date = QDate::fromString(dateStr, "yyyy-MM-dd");
     if(date.isValid()) {
