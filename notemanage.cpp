@@ -44,7 +44,7 @@ void NoteManage::onApplyClicked()
                     notes.append(note);
             }
 
-            Note::Modify(notes);
+            Note::Modify(date, notes);
         } else {
             ErrorDialog *ed = new ErrorDialog(this, "Invalid Date");
             ed->show();

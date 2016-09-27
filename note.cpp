@@ -112,13 +112,14 @@ QSharedPointer<QList<Note> > Note::getNotes()
     return notes;
 }
 
-bool Note::Modify(const QList<Note> &notes)
+bool Note::Modify(const QDate date, const QList<Note> &notes)
 {
     assert(Note::initialized);
     Note::db.open();
     QSqlQuery query("", Note::db);
 
-    query.prepare("DELETE FROM notes");
+    query.prepare("DELETE FROM notes WHERE date=?");
+    query.addBindValue(date.toString("yyyy-MM-dd"));
     query.exec();
 
     for(QList<Note>::const_iterator iter = notes.begin(); iter != notes.end(); iter++) {

@@ -13,7 +13,7 @@ public:
     static QSharedPointer<Note> CreateByDateId(QDate date, int id);
     static QSharedPointer<QList<Note>> getNotesByDate(QDate date);
     static QSharedPointer<QList<Note>> getNotes();
-    static bool Modify(const QList<Note> &notes);
+    static bool Modify(const QDate date, const QList<Note> &notes);
 
     Note(QDate date, int id, long sellerId, long goodId);
 
